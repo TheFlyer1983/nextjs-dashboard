@@ -10,5 +10,9 @@
     "browser": true,
     "node": true
   },
+  "rules": {
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
+    "react/react-in-jsx-scope": "off"
+  },
   "ignorePatterns": [".next/**", "next-env.d.ts"]
 }
