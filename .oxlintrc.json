@@ -12,7 +12,8 @@
   },
   "rules": {
     "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error"
   },
   "ignorePatterns": [".next/**", "next-env.d.ts"]
 }

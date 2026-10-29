@@ -6,6 +6,7 @@ import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchInvoicesPages } from '@/app/lib/data';
+import { DeleteStatusProvider, DeleteStatusMessage } from '@/app/ui/invoices/delete-status';
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -16,7 +17,7 @@ export default async function Page(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchInvoicesPages(query)
+  const totalPages = await fetchInvoicesPages(query);
 
   return (
     <div className="w-full">
@@ -27,9 +28,12 @@ export default async function Page(props: {
         <Search placeholder="Search invoices..." />
         <CreateInvoice />
       </div>
-       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
-      </Suspense>
+      <DeleteStatusProvider>
+        <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+          <Table query={query} currentPage={currentPage} />
+        </Suspense>
+        <DeleteStatusMessage />
+      </DeleteStatusProvider>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
