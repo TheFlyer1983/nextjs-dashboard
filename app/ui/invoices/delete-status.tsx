@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState } from 'react';
+import { FormError } from '@/app/ui/form-errors';
 
 const DeleteStatusContext = createContext<{
   message: string | null;
@@ -20,14 +21,10 @@ export function DeleteStatusProvider({ children }: { children: React.ReactNode }
 export function useDeleteStatus() {
   const context = useContext(DeleteStatusContext);
   if (!context) throw new Error('useDeleteStatus must be used inside DeleteStatusProvider');
-  return context
+  return context;
 }
 
 export function DeleteStatusMessage() {
   const { message } = useDeleteStatus();
-  return (
-    <div aria-live="polite" aria-atomic>
-      {message && <p className="mt-2 text-sm text-red-500">{message}</p>}
-    </div >
-  )
+  return <FormError errors={message} />;
 }
